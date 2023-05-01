@@ -1,50 +1,76 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { createStackNavigator } from "@react-navigation/stack";
+const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
+import Home from "../screens/Home";
+import MyWorkouts from "../screens/MyWorkouts";
+import Workout from "../screens/Workout";
 
-import Welcome from "../screens/Welcome";
-import Name from "../screens/Name";
-import DaysTraining from "../screens/DaysTraining";
-import Level from "../screens/Level";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { FontAwesome } from "@expo/vector-icons";
+import ButtonWorkout from "../components/ButtonWorkout";
 
 export default function AppRoutes() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Name"
-          component={Name}
-          options={{
-            headerTitle: "",
-            headerTransparent: true,
-          }}
-        />
-        <Stack.Screen
-          name="DaysTraining"
-          component={DaysTraining}
-          options={{
-            headerTitle: "",
-            headerTransparent: true,
-          }}
-        />
-        <Stack.Screen
-          name="Level"
-          component={Level}
-          options={{
-            headerTitle: "",
-            headerTransparent: true,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor: "#d80042",
+        tabBarInactiveTintColor: "black",
+        tabBarStyle: {
+          height: 60,
+        },
+        tabBarItemStyle: {
+          marginBottom: 10,
+        },
+        tabBarLabelStyle: {
+          fontFamily: "Lexend_400Regular",
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Início"
+        component={Home}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "Seu progresso diário",
+          headerTitleStyle: {
+            fontFamily: "Lexend_400Regular",
+            fontSize: 18,
+            marginLeft: 20,
+          },
+          headerRight: () => (
+            <TouchableOpacity>
+              <FontAwesome name="gear" size={22} color="black" />
+            </TouchableOpacity>
+          ),
+          headerRightContainerStyle: {
+            marginRight: 20,
+          },
+          tabBarIcon: ({ focused, color, size }) => (
+            <FontAwesome name="home" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Workout"
+        component={Workout}
+        options={{
+          tabBarLabel: "",
+          tabBarIcon: () => <ButtonWorkout />,
+        }}
+      />
+      <Tab.Screen
+        name="Meus treinos"
+        component={MyWorkouts}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <FontAwesome name="list-alt" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
