@@ -4,8 +4,9 @@ import {
   Lexend_700Bold,
 } from "@expo-google-fonts/lexend";
 
-import AppRoutes from "./src/routes/app.routes";
 import { ProfileProviver } from "./src/contexts/informationProfile";
+
+import MainRoutes from "./src/routes/main.routes";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -18,7 +19,7 @@ export default function App() {
   }
   return (
     <ProfileProviver>
-      <AppRoutes />
+      <MainRoutes />
     </ProfileProviver>
   );
 }
