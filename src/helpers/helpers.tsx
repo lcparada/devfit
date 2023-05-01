@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const daysWeek = [
   "Segunda",
   "Terça",
@@ -26,5 +28,60 @@ export function TextForLengthArrayTraining(daysTraining: string[]) {
       return "Eu duvido que vc treine 7 dias!";
     default:
       return null;
+  }
+}
+
+export const months = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+];
+
+export function calculateDaysInMonth(month: number): number[] {
+  let days = [];
+  let daysInMonth = moment(`2023-${month + 2}`).daysInMonth();
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(i);
+  }
+  return days;
+}
+
+export function ConvertDayToDayInEnglish(day: string): string {
+  if (day === "Domingo") {
+    return "Sunday";
+  }
+  if (day === "Segunda") {
+    return "Monday";
+  }
+  if (day === "Terça") {
+    return "Tuesday";
+  }
+  if (day === "Quarta") {
+    return "Wednesday";
+  }
+  if (day === "Quinta") {
+    return "Thursday";
+  }
+  if (day === "Sexta") {
+    return "Friday";
+  } else {
+    return "Saturday";
+  }
+}
+
+export function addZeroToLeft(n: number): string {
+  if (n < 10) {
+    return "0" + n;
+  } else {
+    return n.toString();
   }
 }
