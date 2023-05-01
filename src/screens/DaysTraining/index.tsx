@@ -16,7 +16,7 @@ import { FlatList, Alert } from "react-native";
 
 import { daysWeek } from "../../helpers/helpers";
 
-import { ListDays } from "../../components/ListDays";
+import { ListWorkoutDays } from "../../components/ListWorkoutDays";
 
 import { useContext } from "react";
 
@@ -54,7 +54,7 @@ export default function DaysTraining() {
           numColumns={3}
           data={daysWeek}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => <ListDays dayOfWeek={item} />}
+          renderItem={({ item }) => <ListWorkoutDays dayOfWeek={item} />}
         />
       </Body>
 
