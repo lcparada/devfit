@@ -8,9 +8,14 @@ type nameType = {
   name: string;
   daysTraining: string[];
   level: LevelModel;
+  typeTraining: string[];
+  dailyProgress: string[];
   saveName: (name: string) => void;
   saveDaysTraining: (day: string) => string;
   saveLevel: (level: LevelModel) => void;
+  saveTypeTraining: (typeTraining: string) => void;
+  removeTypeTraining: (nameTraining: string) => void;
+  saveDailyProgress: (progress: string) => void;
 };
 
 const ProfileContext = createContext<nameType>({} as nameType);
@@ -19,6 +24,8 @@ function ProfileProviver({ children }: MyComponentChildren) {
   const [name, setName] = useState<string>("");
   const [daysTraining, setDaysTraining] = useState<string[]>([]);
   const [level, setLevel] = useState<LevelModel>("iniciante");
+  const [typeTraining, setTypeTraining] = useState<string[]>([]);
+  const [dailyProgress, setDailyProgress] = useState<string[]>([]);
 
   function saveName(name: string) {
     setName(name);
@@ -38,6 +45,18 @@ function ProfileProviver({ children }: MyComponentChildren) {
     setLevel(level);
   }
 
+  function saveTypeTraining(type: string) {
+    setTypeTraining([...typeTraining, type]);
+  }
+
+  function removeTypeTraining(nameTraining: string) {
+    setTypeTraining(typeTraining.filter((item) => item !== nameTraining));
+  }
+
+  function saveDailyProgress(progress: string) {
+    setDailyProgress([...dailyProgress, progress]);
+  }
+
   return (
     <ProfileContext.Provider
       value={{
@@ -47,6 +66,11 @@ function ProfileProviver({ children }: MyComponentChildren) {
         saveDaysTraining,
         level,
         saveLevel,
+        typeTraining,
+        saveTypeTraining,
+        removeTypeTraining,
+        dailyProgress,
+        saveDailyProgress,
       }}
     >
       {children}
