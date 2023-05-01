@@ -5,6 +5,11 @@ export declare global {
       Name: undefined;
       DaysTraining: undefined;
       Level: undefined;
+      OptionsTraining: undefined;
+      Home: undefined;
+      MyWorkouts: undefined;
+      CreateProfileRoutes: undefined;
+      AppRoutes: undefined;
     }
   }
 }
