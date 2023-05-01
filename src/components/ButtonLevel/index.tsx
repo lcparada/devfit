@@ -6,6 +6,8 @@ import { ProfileContext } from "../../contexts/informationProfile";
 
 import { LevelModel } from "../../contexts/informationProfile";
 
+import { useNavigation } from "@react-navigation/native";
+
 type IProps = {
   option: string;
   level: LevelModel;
@@ -14,8 +16,11 @@ type IProps = {
 export default function ButtonLevel(props: IProps) {
   const { saveLevel } = useContext(ProfileContext);
 
+  const navigation = useNavigation();
+
   function sendData() {
     saveLevel(props.level);
+    navigation.navigate("OptionsTraining");
   }
 
   return (
