@@ -20,7 +20,7 @@ export default function Welcome() {
       </Header>
 
       <Body>
-        <Logo source={require("../../assets/logo.png")} />
+        <Logo source={require("../../assets/Main/logo.png")} />
       </Body>
 
       <Footer>
