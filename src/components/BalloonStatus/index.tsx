@@ -22,18 +22,17 @@ type BallonStatusProps = {
 };
 
 export default function BalloonStatus(props: BallonStatusProps) {
-  const today = moment().subtract(3, "h");
+  const today = moment().subtract(new Date().getTimezoneOffset() / 60, "h");
 
   const { daysTraining } = useContext(ProfileContext);
 
   const [isRestDay, setIsRestDay] = useState<boolean>(false);
 
-  const [titleBalloon, setTitleBalloon] = useState<string>("");
-
   const [showCounter, setShowCounter] = useState<boolean>(false);
 
   const [counter, setCounter] = useState<string>("");
 
+  /// verificar se e dia de treino
   function restDay() {
     if (
       !daysTraining.includes(
@@ -44,22 +43,20 @@ export default function BalloonStatus(props: BallonStatusProps) {
     ) {
       setIsRestDay(true);
       setShowCounter(false);
-      setTitleBalloon("Dia de Descanso!");
     } else {
-      setTitleBalloon("Treino perdido");
       setShowCounter(false);
       setIsRestDay(false);
     }
   }
 
-  function trainedOrNot() {}
-
+  /// verificar se tem treino
   function todayHaveWorkout() {
     if (
       daysTraining.includes(today.format("dddd")) &&
-      props.selectedDay === Number(today.format("D")) - 1
+      moment(
+        `${moment().year()}-${props.selectedMonth + 1}-${props.selectedDay + 2}`
+      ).format("DD-MM-YYYY") === today.format("DD-MM-YYYY")
     ) {
-      setTitleBalloon("Dia de treino!🚀");
       setIsRestDay(false);
       setShowCounter(true);
       toggleCounter();
@@ -69,6 +66,7 @@ export default function BalloonStatus(props: BallonStatusProps) {
     }
   }
 
+  /// contador
   function toggleCounter() {
     let today = moment();
     let finalToday = moment();
@@ -90,7 +88,7 @@ export default function BalloonStatus(props: BallonStatusProps) {
   useEffect(() => {
     restDay();
     todayHaveWorkout();
-  }, [props.selectedDay]);
+  }, [props.selectedDay, props.selectedMonth]);
 
   useEffect(() => {
     let timer = setInterval(toggleCounter, 1000);
@@ -98,20 +96,42 @@ export default function BalloonStatus(props: BallonStatusProps) {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    console.log(moment("2023-05-03").unix() >= today.unix());
+    console.log(props.selectedDay);
+  }, []);
+
   return (
     <Container>
       <BalloonTriangle />
       <BalloonInformations>
-        <BalloonInformationsText>{titleBalloon}</BalloonInformationsText>
+        <BalloonInformationsText>
+          {daysTraining.includes(today.format("dddd")) &&
+          moment(
+            `2023-${props.selectedMonth + 1}-${props.selectedDay + 2}`
+          ).format("DD/MM/YYYY") === today.format("DD/MM/YYYY")
+            ? "Dia de treino!🚀"
+            : moment(
+                `2023-${props.selectedMonth + 1}-${props.selectedDay + 2}`
+              ).format("DD/MM/YYYY") === today.format("DD/MM/YYYY")
+            ? "Dia de descanso"
+            : today.unix() <
+              moment(
+                `${moment().year()}-${props.selectedMonth + 1}-${
+                  props.selectedDay + 1
+                }`
+              ).unix()
+            ? "Dia futuro"
+            : "Passado não interessa"}
+        </BalloonInformationsText>
         {showCounter ? <BalloonCounter>{counter}</BalloonCounter> : null}
         {isRestDay ? null : (
           <BalloonButton>
             <BalloonButtonText>
-              {titleBalloon === "Treino perdido"
-                ? "Marcar como feito!"
-                : titleBalloon === "Dia de treino!🚀"
+              {daysTraining.includes(today.format("dddd")) &&
+              props.selectedDay === Number(today.format("D")) - 1
                 ? "Treinar"
-                : "Desmarcar"}
+                : "Marcar como feito!"}
             </BalloonButtonText>
           </BalloonButton>
         )}
