@@ -39,9 +39,8 @@ export default function Home() {
         <TextCaption>Legenda:</TextCaption>
         <Captions captionName="Hoje" captionColor="#2CBBBD" />
         <Captions captionName="Treino feito" captionColor="#45CB85" />
-        <Captions captionName="Treino perdido" captionColor="#DB2B39" />
+        <Captions captionName="Dia de treino" captionColor="#DB2B39" />
         <Captions captionName="Dia de descanso" captionColor="#DADADA" />
-        <Captions captionName="Dia futuro" captionColor="#A9A7A7" />
       </Body>
     </Container>
   );
